@@ -33,7 +33,7 @@ keyword abstract|assert|boolean|break|byte|case|catch|char|class|const|continue|
 [/][*][^*]*[*]+([^*/][^*]*[*]+)*[/] printf("Comentario2");
 
 {keyword}       {
-                    printf("%s ",yytext);
+                    printf("%s",yytext);
                     exist = 0;
                     for(int i = 0; i < top + 1; i++){
                         if(strncmp(yytext, arrayKeyWords[i], 15) == 0){
@@ -48,16 +48,16 @@ keyword abstract|assert|boolean|break|byte|case|catch|char|class|const|continue|
                     }
                 }
 {id}        {
-                printf("%s ",yytext);
+                printf("%s",yytext);
                 exist = 0;
                 count = 0;
                 rewind(fid);
 
-                while (fscanf(fid, "%s - %d", buffer, num) != EOF){
+                while (fscanf(fid, "%s - %d\n", buffer, &num) != EOF){
                     int nDigits = (int)floor(log10(abs(num))) + 1;
-                    count += strlen(buffer)+ nDigits + 3;
+                    count += strlen(buffer)+ nDigits + 4;
                     if(strcmp(buffer, yytext) == 0) {
-                        fseek(fid, count-strlen(buffer) - nDigits - 3, SEEK_SET);
+                        fseek(fid, count - strlen(buffer) - nDigits - 4, SEEK_SET);
                         printf("%d", count);
                         fprintf(fid, "%s - %d\n", yytext, num+1);
                         exist = 1;
@@ -65,28 +65,52 @@ keyword abstract|assert|boolean|break|byte|case|catch|char|class|const|continue|
                 }
 
                 if(exist == 0){
-                    fprintf(fid, "\n%s - %d", yytext, 1);
+                    fprintf(fid, "%s - %d\n", yytext, 1);
                 }
             }
-{num}   ;
+{num}       {
+                printf("%s",yytext);
+                exist = 0;
+                count = 0;
+                rewind(fnum);
 
-.           {printf("%s ", yytext);}
+                while (fscanf(fnum, "%s - %d\n", buffer, &num) != EOF){
+                    int nDigits = (int)floor(log10(abs(num))) + 1;
+                    count += strlen(buffer)+ nDigits + 4;
+                    if(strcmp(buffer, yytext) == 0) {
+                        fseek(fid, count-strlen(buffer) - nDigits - 4, SEEK_SET);
+                        printf("%d", count);
+                        fprintf(fnum, "%s - %d\n", yytext, num+1);
+                        exist = 1;
+                    }
+                }
+
+                if(exist == 0){
+                    fprintf(fnum, "%s - %d\n", yytext, 1);
+                }
+            }
+
+.           {printf("%s", yytext);}
 %%
 
 main( int argc, char** argv ) {
+    counterKeywords = (int*) malloc(50*sizeof(int));
+    
     FILE *f1 = fopen("identi.txt", "w");
     FILE *f2 = fopen("numero.txt", "w");
     fclose(f1);
     fclose(f2);
 
     fid = fopen("identi.txt", "r+");
+    fnum = fopen("numero.txt", "r+");
 
-    counterKeywords = (int*) malloc(50*sizeof(int));
+    
     yyin = stdin;
-    printf("Entra ");
+    printf("---Entra---\n");
     yylex();
-    printf("Sale ");
+    printf("---Sale---\n");
     fclose(fid);
+    fclose(fnum);
     
     FILE *fwr = fopen("reserv.txt", "w");
     for(int i = 0; i < top +1; i++){

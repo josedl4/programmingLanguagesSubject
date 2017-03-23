@@ -10,5 +10,11 @@ public class Test1 {
      */
     public static void main(String args[]){
         System.out.println("Hello World, ignara estas palabras: class, float, enum");
+        
+        int myInteger = 0;
+        myInteger ++;
+
+        float myFloat2 = 1.99E34;
+        myFloat2 *= 3;
     }
 }

@@ -23,8 +23,8 @@ dig [0-9]
 digs {dig}+
 frac [.]{digs}
 expo [eE][+-]?{digs}
-id {let}({let}|{dig})*
-num {digs}{frac}?{expo}?
+id ({let}|_({let}|{dig}|[_]))({let}|{dig}|[_])*
+num {digs}{frac}?{expo}?[f]?
 keyword abstract|assert|boolean|break|byte|case|catch|char|class|const|continue|default|do|double|else|enum|extends|final|finally|float|for|goto|if|implements|import|instanceof|int|interface|long|native|new|package|private|protected|public|return|short|static|strictfp|super|switch|synchronized|this|throw|throws|transient|try|void|volatile|while
 
 %%
@@ -40,6 +40,7 @@ keyword abstract|assert|boolean|break|byte|case|catch|char|class|const|continue|
                         if(strncmp(yytext, arrayKeyWords[i], 15) == 0){
                             exist = 1;
                             counterKeywords[i] ++;
+                            break;
                         }
                     }
                     if(exist == 0){
@@ -59,9 +60,10 @@ keyword abstract|assert|boolean|break|byte|case|catch|char|class|const|continue|
                     count += strlen(buffer)+ nDigits + 4;
                     if(strcmp(buffer, yytext) == 0) {
                         fseek(fid, count - strlen(buffer) - nDigits - 4, SEEK_SET);
-                        printf("%d", count);
+                        
                         fprintf(fid, "%s - %d\n", yytext, num+1);
                         exist = 1;
+                        break;
                     }
                 }
 
@@ -80,9 +82,10 @@ keyword abstract|assert|boolean|break|byte|case|catch|char|class|const|continue|
                     count += strlen(buffer)+ nDigits + 4;
                     if(strcmp(buffer, yytext) == 0) {
                         fseek(fid, count-strlen(buffer) - nDigits - 4, SEEK_SET);
-                        printf("%d", count);
+                      
                         fprintf(fnum, "%s - %d\n", yytext, num+1);
                         exist = 1;
+                        break;
                     }
                 }
 
@@ -105,11 +108,18 @@ main( int argc, char** argv ) {
     fid = fopen("identi.txt", "r+");
     fnum = fopen("numero.txt", "r+");
 
-    
-    yyin = stdin;
-    printf("---Entra---\n");
+    if ( argc > 1 ){
+        if((yyin = fopen( argv[1], "r" )) == NULL){
+            printf("File not found\n");
+            exit(-1);
+        }
+    } else {
+        yyin = stdin;
+    }
+
     yylex();
-    printf("---Sale---\n");
+    printf("\n");
+
     fclose(fid);
     fclose(fnum);
     

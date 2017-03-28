@@ -11,11 +11,11 @@ public class Test1 {
     public static void main(String args[]){
         System.out.println("Hello World, ignara estas palabras: class, float, enum");
         
-        boolean bool1;
+        boolean boolean1;
         boolean bool2;
         boolean bool3;
         boolean bool4;
-        char c1;
+        char c1 = 'a';
         char c2;
         char c3;
         char c4;
@@ -30,10 +30,10 @@ public class Test1 {
 
         String chain = "Otra cadena que no se va a leer";
 
-        int myInteger = 0;
-        myInteger ++;
+        int my_int = 0;
+        my_int ++;
 
-        float myFloat2 = 1.99E34;
-        myFloat2 *= 3;
+        float my_float2 = 1.99E34;
+        my_float2 *= 3;
     }
 }

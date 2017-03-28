@@ -29,6 +29,7 @@ keyword abstract|assert|boolean|break|byte|case|catch|char|class|const|continue|
 
 %%
 \".*\" printf("Comillas");
+\'.*\' printf("ComillasSimples");
 "//".* printf("Comentario1");
 [/][*][^*]*[*]+([^*/][^*]*[*]+)*[/] printf("Comentario2");
 

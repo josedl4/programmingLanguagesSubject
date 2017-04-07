@@ -29,3 +29,9 @@ La declaración de métodos y funciones tiene 6 componentes:
 
 Mododifiers-Doc:https://docs.oracle.com/javase/tutorial/reflect/member/methodModifiers.html
 Modificador-> (public | private | protected)(final | abstract | synchronized)(native | strictfp)
+
+TipoDeSalida-> (primitive | class | void )
+primitive-Doc: https://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html
+primitive->(byte | short | int |long | float | double | char | string | boolean)
+
+ParametrosEntrada-> (((primitive | class )identificador)(([,] (primitive | class))identificador)*) | ε

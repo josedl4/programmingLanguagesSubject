@@ -1,3 +1,7 @@
+#####--COSAS UTILES--#####
+Package para atom, highlight de sintaxis lex/flex para atom:
+https://atom.io/packages/language-lex-flex-new
+
 ####--COSAS A TENER EN CUENTA--####
 Los tipos que se definan comienzan desde 258,
 se reservan los números anteriores para carácteres ascii.

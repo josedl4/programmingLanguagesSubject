@@ -33,14 +33,19 @@ id [a-z]([a-zA-Z]|[0-9])*
 {access}  {
               if(estado==0){
                 estado=1;
-              }
-              if(estado!=0){
+              }else if(estado==11){
+                  //el estado sigue siendo 11
+
+              }else{
                 printf("error");
               }
 }
 {nonaccess} {
               if(estado<=2){
                 estado=2;
+              }else if(estado==11){
+                  //el estado sigue siendo 11
+
               }else{
                 printf("error");
               }
@@ -50,6 +55,13 @@ id [a-z]([a-zA-Z]|[0-9])*
               if(estado<=2){
                 estado=3;
                 tmptype=yytext;
+              }else if(estado==6){
+                estado=8;
+              }else if(estado==10){
+                estado=8;
+              }else if(estado==11){
+                  //el estado sigue siendo 11
+
               }else{
                 printf("error");
               }
@@ -58,6 +70,13 @@ id [a-z]([a-zA-Z]|[0-9])*
               if(estado<=2){
                 estado=3;
                 tmptype=yytext;
+              }else if(estado==6){
+                estado=8;
+              }else if(estado==10){
+                estado=8;
+              }else if(estado==11){
+                  //el estado sigue siendo 11
+
               }else{
                 printf("error");
               }
@@ -67,5 +86,68 @@ id [a-z]([a-zA-Z]|[0-9])*
                 estado=5;
               }else if(estado==8){
                 estado=9;
+              }else if(estado==11){
+                //el estado sigue siendo 11
+              }else{
+                printf("error");
+              }
+}
+[\[]  {
+              if(estado==3){
+                //el estado sigue siedo 3
+              }else if(estado==8){
+                //el estado sigue siendo 8
+              }else{
+                printf("error");
+              }
+}
+[\]]  {
+              if(estado==11){
+                //el estado sigue siendo 11
+              }else{
+                printf("error");
+              }
+}
+[\,]  {
+              if(estado==9){
+                estado=10;
+              }else if(estado==11){
+                //el estado sigue siendo 11
+              }else{
+                printf("error");
+              }
+}
+[\(]  {
+              if(estado==5){
+                estado=6;
+              }else if(estado==11){
+                //el estado sigue igual
+              }else{
+                printf("error");
+              }
+}
+[\)]  {
+              if(estado==6 | estado==9){
+                estado=7;
+              }else if(estado==11){
+                //el estado sigue siendo 11
+              }else{
+                printf("error");
+              }
+}
+[\{]  {
+              if(estado==7){
+                estado=11;
+              }else if(estado==11){
+                //el estado sigue siendo 11
+              }else{
+                printf("error");
+              }
+}
+[\}]  {
+              if(estado==11){
+                printf("%s  %s\n",tmpid,tmptype);
+              }else{
+                printf("error");
               }
 }

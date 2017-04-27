@@ -1,6 +1,11 @@
 #####--COSAS UTILES--#####
 Package para atom, highlight de sintaxis lex/flex para atom:
 https://atom.io/packages/language-lex-flex-new
+BNF Index of JAVA language grammar:
+http://cui.unige.ch/isi/bnf/JAVA/BNFindex.html
+Codigo ejemplo parser LL(1):
+http://www.cplusplus.com/forum/beginner/46712/
+
 
 ####--COSAS A TENER EN CUENTA--####
 Los tipos que se definan comienzan desde 258,

@@ -151,3 +151,26 @@ id [a-z]([a-zA-Z]|[0-9])*
                 printf("error");
               }
 }
+%%
+
+main( int argc, char** argv ) {
+
+    FILE *f1 = fopen("result.txt", "w");
+    fclose(f1);
+
+    fichero = fopen("result.txt", "r+");
+
+    if ( argc > 1 ){
+        if((yyin = fopen( argv[1], "r" )) == NULL){
+            printf("File not found\n");
+            exit(-1);
+        }
+    } else {
+        yyin = stdin;
+    }
+
+    yylex();
+    printf("\n");
+
+    fclose(fichero);
+}

@@ -1,0 +1,7 @@
+\".*\" printf("Comillas");
+\'.*\' printf("ComillasSimples");
+"//".* printf("Comentario1");
+[/][*][^*]*[*]+([^*/][^*]*[*]+)*[/] printf("Comentario2");
+
+[^{digs}] printf("Esto NO es un digito");
+[{digs}] printf("Esto SI es un digito");

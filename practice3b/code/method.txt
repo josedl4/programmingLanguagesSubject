@@ -1,0 +1,6 @@
+	Metodos del archivo Java:
+	#########################
+Name -       main  |  Type -       void
+Name -      func1  |  Type -       void
+Name -      func3  |  Type -      float
+Name -      func4  |  Type -    Scanner

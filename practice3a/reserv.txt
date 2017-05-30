@@ -1,0 +1,9 @@
+public  	 -  2
+class  	 -  1
+static  	 -  1
+void  	 -  1
+boolean  	 -  4
+char  	 -  12
+int  	 -  4
+float  	 -  1
+double  	 -  1

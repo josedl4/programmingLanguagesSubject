@@ -1,3 +1,7 @@
-practice3/*
-!practice3/*.l
-!practice3/*.java
+practice3a/*
+!practice3a/*.l
+!practice3a/*.java
+
+practice3c/*.class
+practice3c/*.java
+practice3c/*.tokens

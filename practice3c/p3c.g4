@@ -36,12 +36,67 @@
  *
  *  $ antlr4 Java.g4
  *  $ javac *.java
- *  $ grun Java compilationUnit *.java
+ *  $ grun Java compilationUnit < [Java File]
  */
-grammar Java;
+grammar p3c;
+
+/* Java code */
+
+@header {
+                //Imports necesarios en nuestro programa
+
+				import java.io.BufferedWriter;
+				import java.io.FileWriter;
+				import java.io.IOException;
+				import java.util.ArrayList;
+				}
+
+@parser::members {
+		// Funciones definidas
+		private static ArrayList function = new ArrayList();
+
+		// Llamadas que cada funcion definida realiza
+		private static ArrayList<ArrayList<String>> callToFunction = new ArrayList<ArrayList<String>>();
+
+		// Idice de funcion actual que se esta analizando
+		private static int indexFunction = -1;
+
+		private final static String OUTPUT_FILE = "output_file.data";
+
+		/**
+		 * Realiza la escritura del fichero de salida.
+		 */
+		public static void writeFile() {
+            BufferedWriter bw = null;
+            try {
+                bw = new BufferedWriter(new FileWriter(OUTPUT_FILE));
+                int i, j;
+                for (i = 0; i < function.size(); i++) {
+                        bw.write("Funcion: " + function.get(i));
+                        
+                        bw.write(" - Llamadas a funciones: " + callToFunction.get(i).size()+"\n");
+                        for (j = 0; j < callToFunction.get(i).size(); j++) {
+                                bw.write("   "+ (j+1) + ".- " + callToFunction.get(i).get(j)+"\n");
+                        }
+                        bw.write("\n");
+                }
+            } catch (IOException ex) {
+                System.out.println("File Error: "+ ex);
+            } finally {
+                try {
+                        bw.close();
+                } catch (IOException ex) {
+                        System.err.println("File Error: "+ ex);
+                }
+            }
+        }
+}
+
+/* --------- */
 
 // starting point for parsing a java file
 compilationUnit
+@after { writeFile(); }
     :   packageDeclaration? importDeclaration* typeDeclaration* EOF
     ;
 
@@ -163,7 +218,18 @@ memberDeclaration
    for invalid return type after parsing.
  */
 methodDeclaration
-    :   (typeType|'void') Identifier {System.out.println("--> "+$Identifier.text);} formalParameters ('[' ']')*
+    :   (typeType|'void') Identifier 
+            {
+                if (function.contains($Identifier.text)) {
+                        indexFunction = function.indexOf($Identifier.text);
+                } else {
+                        callToFunction.add(new ArrayList<String>());
+                        function.add($Identifier.text);
+                        indexFunction = function.indexOf($Identifier.text);
+                }
+            }
+    
+         formalParameters ('[' ']')*
         ('throws' qualifiedNameList)?
         (   methodBody
         |   ';'
@@ -175,7 +241,17 @@ genericMethodDeclaration
     ;
 
 constructorDeclaration
-    :   Identifier {System.out.println("--> "+$Identifier.text + "(Constructor)");} formalParameters ('throws' qualifiedNameList)?
+    :   Identifier 
+        {
+            if (function.contains($Identifier.text)) {
+                    indexFunction = function.indexOf($Identifier.text);
+            } else {
+                    callToFunction.add(new ArrayList<String>());
+                    function.add($Identifier.text);
+                    indexFunction = function.indexOf($Identifier.text);
+            }
+        }
+        formalParameters ('throws' qualifiedNameList)?
         constructorBody
     ;
 
@@ -506,8 +582,8 @@ expression
     |   expression '.' 'super' superSuffix
     |   expression '.' explicitGenericInvocation
     |   expression '[' expression ']'
-    |   expression '(' expressionList? ')' {System.out.println("\t -> " + $expression.text);}
-    |   'new' creator {System.out.println("\t -> " + $creator.text + "(Constructor)");}
+    |   expression { callToFunction.get(indexFunction).add($expression.text); } '(' expressionList? ')'
+    |   'new' creator { callToFunction.get(indexFunction).add($expression.text); }
     |   '(' typeType ')' expression
     |   expression ('++' | '--')
     |   ('+'|'-'|'++'|'--') expression

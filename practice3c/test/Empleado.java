@@ -46,6 +46,9 @@ public class Empleado {
     public static Empleado getEmpleadoID(String nifcif) throws Exception {
         Empleado e = new Empleado();
         System.out.println(e.getListaRoles().getNifCif());
+        System.out.println(e.getListaRoles().getNifCif());
+        System.out.println(e.getListaRoles().getNifCif());
+        System.out.println(e.getListaRoles().getNifCif());
         return e;
     
     }

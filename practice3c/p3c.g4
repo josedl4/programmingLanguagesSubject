@@ -582,8 +582,12 @@ expression
     |   expression '.' 'super' superSuffix
     |   expression '.' explicitGenericInvocation
     |   expression '[' expression ']'
-    |   expression { callToFunction.get(indexFunction).add($expression.text); } '(' expressionList? ')'
-    |   'new' creator { callToFunction.get(indexFunction).add($expression.text); }
+    |   expression {
+        String text = $expression.text;
+        String id = text.split("[.]")[text.split("[.]").length - 1];
+        if(!callToFunction.get(indexFunction).contains(id))
+          callToFunction.get(indexFunction).add(id); } '(' expressionList? ')'
+    |   'new' creator 
     |   '(' typeType ')' expression
     |   expression ('++' | '--')
     |   ('+'|'-'|'++'|'--') expression
@@ -634,7 +638,12 @@ creator
     ;
 
 createdName
-    :   Identifier typeArgumentsOrDiamond? ('.' Identifier typeArgumentsOrDiamond?)*
+    :   Identifier { 
+        String text = $Identifier.text;
+        String id = text.split("[(]")[0];
+        if(!callToFunction.get(indexFunction).contains(id))
+          callToFunction.get(indexFunction).add(id); } 
+          typeArgumentsOrDiamond? ('.' Identifier typeArgumentsOrDiamond?)*
     |   primitiveType
     ;
 

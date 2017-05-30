@@ -1,13 +1,13 @@
 Funcion: Empleado - Llamadas a funciones: 1
-   1.- this.getNifCif
+   1.- getNifCif
 
 Funcion: getListaRoles - Llamadas a funciones: 0
 
 Funcion: getEmpleadoID - Llamadas a funciones: 4
-   1.- newEmpleado()
-   2.- System.out.println
-   3.- e.getListaRoles
-   4.- e.getListaRoles().getNifCif
+   1.- Empleado
+   2.- println
+   3.- getListaRoles
+   4.- getNifCif
 
 Funcion: getNifCif - Llamadas a funciones: 0
 

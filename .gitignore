@@ -1,3 +1,8 @@
 practice3/*
 !practice3/*.l
 !practice3/*.java
+*.class
+*.tokens
+*Listener.java
+*Lexer.java
+*Parser.java

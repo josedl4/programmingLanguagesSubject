@@ -53,7 +53,7 @@ grammar p3c;
 
 @parser::members {
 		// Funciones definidas
-		private static ArrayList function = new ArrayList();
+		private static ArrayList<String> function = new ArrayList<String>();
 
 		// Llamadas que cada funcion definida realiza
 		private static ArrayList<ArrayList<String>> callToFunction = new ArrayList<ArrayList<String>>();

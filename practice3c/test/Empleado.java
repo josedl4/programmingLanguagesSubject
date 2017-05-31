@@ -7,7 +7,7 @@
  */
 public class Empleado {
     
-    private String nifcif;
+    private String nifcif = Empleado.getEmpleadoID("").toString();
     private String nombre;
     
     

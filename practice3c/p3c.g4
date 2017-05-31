@@ -585,7 +585,7 @@ expression
     |   expression {
         String text = $expression.text;
         String id = text.split("[.]")[text.split("[.]").length - 1];
-        if(!callToFunction.get(indexFunction).contains(id))
+        if(indexFunction != -1 && !callToFunction.get(indexFunction).contains(id))
           callToFunction.get(indexFunction).add(id); } '(' expressionList? ')'
     |   'new' creator 
     |   '(' typeType ')' expression
@@ -641,7 +641,7 @@ createdName
     :   Identifier { 
         String text = $Identifier.text;
         String id = text.split("[(]")[0];
-        if(!callToFunction.get(indexFunction).contains(id))
+        if(indexFunction != -1 && !callToFunction.get(indexFunction).contains(id))
           callToFunction.get(indexFunction).add(id); } 
           typeArgumentsOrDiamond? ('.' Identifier typeArgumentsOrDiamond?)*
     |   primitiveType
